@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Circle Animation</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            overflow: hidden;
+            margin: 0;
+        }
+
+        .circle-mock {
+            position: relative;
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            border: 1px dashed red;
+            margin: 50px auto;
+            margin-top: -200px;
+        }
+
+        .center {
+            position: absolute;
+            top: calc(50% - 10px);
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .item {
+            position: absolute;
+        }
+
+        .view {
+            width: 20px;
+            height: 20px;
+            position: absolute;
+            top: 40px;
+            left: calc(50% - 10px);
+            border: 1px solid blue;
+        }
+
+        .main {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .wrapper {
+            transform: translate(0, 250px);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main">
+        <div class="view"></div>
+        <div class="wrapper">
+            <div class="circle-mock">
+                <div class="center">
+                    <div class="item">h</div>
+                    <div class="item">h</div>
+                    <div class="item">e</div>
+                    <div class="item">l</div>
+                    <div class="item">l</div>
+                    <div class="item">o</div>
+                    <div class="item">h</div>
+                    <div class="item">e</div>
+                    <div class="item">l</div>
+                    <div class="item">l</div>
+                    <div class="item">o</div>
+                    <div class="item">e</div>
+                    <div class="item">l</div>
+                    <div class="item">l</div>
+                    <div class="item">o</div>
+                    <div class="item">h</div>
+                    <div class="item">e</div>
+                    <div class="item">l</div>
+                    <div class="item">l</div>
+                    <div class="item">o</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import VirtualScroll from "https://cdn.skypack.dev/virtual-scroll@2.1.1";
+
+        const scroller = new VirtualScroll();
+        const items = document.querySelectorAll('.item');
+        const radius = document.querySelector('.circle-mock').offsetHeight / 2;
+        const radians = 2 * Math.PI / items.length;
+        const wrapper = document.querySelector('.wrapper');
+
+        items.forEach((el, i) => {
+            const alpha = Math.PI - (i * radians);
+            el.style.transform = `translate(${radius * Math.sin(alpha)}px, ${radius * Math.cos(alpha)}px)`;
+        });
+
+        scroller.on(e => {
+            wrapper.style.transform = `translate(${radius * Math.sin(e.y / 360)}px, ${radius * Math.cos(e.y / 360)}px)`;
+        });
+    </script>
+</body>
+
+</html>
